@@ -1,2 +1,2 @@
-##Web Scraper for Pokemon Stats  
-web scraper made using javascript  
+## Web Scraper for Pokemon Stats  
+Web scraper made using javascript  
