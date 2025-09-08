@@ -23,7 +23,7 @@ async function scrape() {
     // Extract data from the page
     const data = await page.evaluate(() => {
         const name = document.querySelector('h1');
-        const typeElements = document.querySelectorAll('.vitals-table.type-icon');
+        const typeElements = document.querySelectorAll('.vitals-table .type-icon');
         const types = Array.from(typeElements).map(el => el.innerText);
         return { name, types };
     });
