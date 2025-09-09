@@ -19,5 +19,6 @@
   "description": "",
   "dependencies": {
     "puppeteer": "^19.8.0"
-  }
+  },
+  "type": "module"
 }
