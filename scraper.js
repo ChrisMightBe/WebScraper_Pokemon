@@ -21,21 +21,38 @@ import fs from "fs";
 async function scrape() {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://pokemondb.net/pokedex/bulbasaur');
+    await page.goto('https://pokemondb.net/pokedex/bulbasaur', {timeout:0});
 
-    for(let i = 0; i < 5; i++) {
+    const results = [];
+
+    for(let i = 0; i < 809; i++) {
     const data = await page.evaluate(() => {
         const nameRaw = document.querySelector('h1');
         const name = nameRaw ? nameRaw.innerText : null;
         const typeRaws = Array.from(document.querySelectorAll('.vitals-table .type-icon'));
-        const types = typeRaws.slice(0, 2).map(el => el.innerText);
+        const types = typeRaws
+            .map(el => el.innerText)
+            .filter(type => !/[a-z]/.test(type));
         return { name, types };
     });
-    console.log(data);
-    await page.click('.entity-nav-next'); // Clicks the button to send to next pokemon
+    results.push(data);
+    await Promise.all([
+        page.click('.entity-nav-next'),
+        page.waitForNavigation({ timeout: 0 })
+    ]);
 }
     
     await browser.close();
+
+    //Convert to CSV
+    const csvHEeader = 'Name,Type1,Type2\n';
+    const csvRows = results.map(p =>
+        [p.name, p.types[0] || "", p.types[1] || ""].join(",")
+    );
+    const csvContent = csvHEeader + csvRows.join("\n");
+
+    fs.writeFileSync('pokemon.csv', csvContent, "utf-8");
+    console.log('Data saved to pokemon.csv');
 }
 
 scrape();
