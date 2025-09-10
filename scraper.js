@@ -56,3 +56,5 @@ async function scrape() {
 }
 
 scrape();
+
+//pokemondb, in their faqs, state that their data is not free for use
