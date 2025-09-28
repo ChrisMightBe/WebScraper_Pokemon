@@ -1,6 +1,7 @@
 ## Web Scraper for Pokemon Stats  
-Web scraper made using javascript  
+*Web scraper made using javascript*  
 
+  
 I decided I wanted to make a web scraper for pokémon data becasue i wante dto make further projects using pokémon data  
 
 Originally I used cheerio for web navigation, but moved to puppeteer for better navigation through pages  
